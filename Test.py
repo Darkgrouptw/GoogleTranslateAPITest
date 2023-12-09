@@ -14,7 +14,7 @@ def GetSupportLanguage(pKey):
     formData = { 'key': pKey, 'target': 'zh-TW' }
     try:
         response = requests.post(BaseURL + '/languages', formData)
-        return json.loads(response.text)['data']
+        return json.loads(response.text)['data']['languages']
     except:
         print('GetSupportLanguage(): Something went wrong')
     return None
@@ -49,16 +49,17 @@ JsonData = __ReadFile('GoogleAPIKey/GoogleAPIKey.box')
 # 3. Translate
 key = JsonData['Key']
 result1 = GetSupportLanguage(key)
-print('GetSupportLanguage')
+print(f'GetSupportLanguage (Count: {len(result1)})')
 print(result1)
 print()
 
-result2 = DetectLanguage(key, '我想要大便，測試')
-print('DetectLanguage')
+testText = '我想要大便，測試'
+result2 = DetectLanguage(key, testText)
+print(f'DetectLanguage: "{testText}"')
 print(result2)
 print()
 
 result3 = Translate(key, '我想要大便，測試', 'zh-TW', 'en')
-print('Traslate')
+print(f'Traslate: "{testText}"')
 print(result3)
 print()
